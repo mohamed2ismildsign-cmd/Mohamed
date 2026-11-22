@@ -1,0 +1,1153 @@
+<title>Mohamed Ismail Portfolio</title>
+<style id="deck-css">
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:500;font-display:block;src:url(fonts/BarlowCondensed-500.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:600;font-display:block;src:url(fonts/BarlowCondensed-600.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:block;src:url(fonts/BarlowCondensed-700.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:block;src:url(fonts/BarlowCondensed-800.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:block;src:url(fonts/Barlow-400.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:500;font-display:block;src:url(fonts/Barlow-500.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:block;src:url(fonts/Barlow-600.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:block;src:url(fonts/JetBrainsMono-var.woff2) format('woff2')}
+
+/* Layout: one 1920x1080 engineering drawing sheet scaled to the screen.
+   Zone-marked border, a title block that updates per sheet, and work pinned to the blueprint like prints. */
+:root{
+  --bp:#123a6b;          /* blueprint ground */
+  --bp-deep:#0c2b52;     /* panels, second tone */
+  --bp-edge:#071a33;     /* letterbox around the sheet */
+  --ink:#eaf2fd;         /* drafting white */
+  --ink-2:#a8c1e0;       /* secondary text */
+  --line:rgba(206,226,250,.62);
+  --line-soft:rgba(206,226,250,.24);
+  --grid-minor:rgba(206,226,250,.055);
+  --grid-major:rgba(206,226,250,.11);
+  --red:#ff8a3d;         /* redline markup: the single accent */
+  --paper:#eef3f9;       /* prints of renders */
+  --f-display:'Barlow Condensed','Arial Narrow','Roboto Condensed',sans-serif;
+  --f-body:'Barlow','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--bp-edge);color:var(--ink);font-family:var(--f-body);overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.viewport{position:fixed;inset:0;overflow:hidden;background:var(--bp-edge)}
+
+/* ---------- the sheet ---------- */
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;overflow:hidden;
+  transform:translate(-50%,-50%) scale(var(--s,.5));transform-origin:50% 50%;
+  background-color:var(--bp);
+  background-image:
+    radial-gradient(ellipse 70% 60% at 28% 22%,rgba(255,255,255,.07),transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%,rgba(3,14,30,.35),transparent 70%),
+    linear-gradient(var(--grid-major) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),
+    linear-gradient(var(--grid-minor) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-minor) 1px,transparent 1px);
+  background-size:100% 100%,100% 100%,120px 120px,120px 120px,24px 24px,24px 24px;
+  background-position:0 0,0 0,48px 48px,48px 48px,48px 48px,48px 48px;
+  box-shadow:0 30px 90px rgba(0,0,0,.5)}
+.grain{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+.sheet{position:absolute;inset:0;width:1920px;height:1080px;z-index:1;pointer-events:none}
+.sheet rect,.sheet line{fill:none;stroke:var(--line)}
+.sheet .fr-o{stroke-width:1;stroke:var(--line-soft)}
+.sheet .fr-i{stroke-width:2}
+.sheet .fr-t{stroke-width:1;stroke:var(--line-soft)}
+.sheet text{font:500 13px var(--f-mono);fill:var(--ink-2);text-anchor:middle;dominant-baseline:middle;letter-spacing:.1em}
+
+/* title block */
+.tblock{position:absolute;right:48px;bottom:48px;z-index:4;width:900px;height:104px;display:grid;
+  grid-template-columns:104px 1fr 230px 150px;grid-template-rows:52px 52px;background:var(--bp);
+  border-top:2px solid var(--line);border-left:2px solid var(--line)}
+.tb-mono{grid-row:1/3;display:flex;align-items:center;justify-content:center;border-right:2px solid var(--line);font:800 44px/1 var(--f-display);letter-spacing:.02em}
+.tb-mono span{color:var(--red)}
+.tb-c{padding:7px 14px 8px;border-right:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;min-width:0}
+.tb-c:last-child,.tb-c.end{border-right:0}
+.tb-c.low{border-bottom:0}
+.tb-l{font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.tb-v{font:600 24px/1 var(--f-display);text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-v.sm{font:500 13px/1 var(--f-mono);letter-spacing:.1em}
+.tb-v.flip{animation:tbflip .5s var(--ease) both}
+@keyframes tbflip{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.credits{position:absolute;left:84px;bottom:66px;z-index:4;display:flex;flex-direction:column;gap:12px}
+.ticks{display:flex;gap:6px}
+.ticks i{display:block;width:22px;height:4px;background:var(--line-soft);transition:background-color .4s}
+.ticks i.on{background:var(--ink-2)}
+.ticks i.cur{background:var(--red)}
+.credits p{margin:0;font:500 13px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
+
+/* ---------- slides ---------- */
+.slide{position:absolute;inset:0;z-index:2;padding:124px 128px 0;opacity:0;visibility:hidden;
+  transition:opacity .45s var(--ease),visibility 0s linear .45s}
+.slide.is-active{opacity:1;visibility:visible;transition:opacity .45s var(--ease)}
+.abs{position:absolute}
+
+.eyebrow{margin:0;font:500 18px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.h1{margin:16px 0 0;font:700 100px/.92 var(--f-display);text-transform:uppercase;letter-spacing:.004em;text-wrap:balance}
+.lede{margin:0;font:400 30px/1.42 var(--f-body);color:var(--ink);text-wrap:pretty}
+.body{margin:0;font:400 24px/1.5 var(--f-body);color:var(--ink-2);text-wrap:pretty}
+.h3{margin:0;font:700 46px/1 var(--f-display);text-transform:uppercase;letter-spacing:.01em}
+.mono-l{font:500 15px/1.35 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+
+/* figures */
+.fig{margin:0;position:relative}
+.ph{position:relative;overflow:hidden;background:var(--bp-deep)}
+.ph.ol{outline:1px solid var(--line-soft);outline-offset:8px}
+.ph img{display:block;width:100%;height:100%;object-fit:cover}
+.paper .ph,.ph.paper{background:var(--paper)}
+.paper img{object-fit:contain;mix-blend-mode:multiply}
+.ph.contain img{object-fit:contain}
+.cap{margin:16px 0 0;display:flex;gap:12px;font:500 14px/1.35 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.cap b{color:var(--red);font-weight:600;white-space:nowrap}
+.chip{position:absolute;left:10px;bottom:10px;padding:6px 9px;background:rgba(7,26,51,.86);font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+
+/* motion: plain rules are the finished look; animations start from hidden */
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes growx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes up{from{transform:translateY(104%)}to{transform:none}}
+@keyframes pin{from{opacity:0;transform:translateY(34px) rotate(var(--r,0deg)) scale(.96)}to{opacity:1;transform:rotate(var(--r,0deg))}}
+@keyframes mark{from{background-size:0% 100%}to{background-size:100% 100%}}
+@keyframes ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.dr{stroke-dasharray:1;stroke-dashoffset:0}
+.is-active .r{animation:rise .8s var(--ease) var(--d,0s) both}
+.is-active .f{animation:fade 1s ease var(--d,0s) both}
+.is-active .w>img,.is-active .wt{animation:wipe 1.15s cubic-bezier(.65,0,.25,1) var(--d,0s) both}
+.is-active .dr{animation:draw 1.4s var(--ease) var(--d,0s) both}
+.is-active .gx{animation:growx .9s var(--ease) var(--d,0s) both}
+.is-active .up{animation:up .95s cubic-bezier(.2,.8,.2,1) var(--d,0s) both}
+.is-active .pin{animation:pin .75s var(--ease) var(--d,0s) both}
+
+/* ---------- 01 cover ---------- */
+.cover-l{position:absolute;left:128px;top:150px;width:1060px}
+.mega{margin:26px 0 0;font:800 236px/.84 var(--f-display);text-transform:uppercase;letter-spacing:-.004em}
+.mega .ln{display:block;overflow:hidden;padding-top:.05em}
+.mega .ln>span{display:block}
+.dim{display:flex;align-items:center;gap:18px;width:var(--dimw,800px);margin-top:30px}
+.dim::before,.dim::after{content:"";width:2px;height:30px;background:var(--line)}
+.dim i{flex:1;height:2px;background:var(--line);position:relative}
+.dim i.l{transform-origin:100% 50%}
+.dim i.r2{transform-origin:0 50%}
+.dim i.l::before,.dim i.r2::after{content:"";position:absolute;top:-6px;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.dim i.l::before{left:0;border-right:15px solid var(--line)}
+.dim i.r2::after{right:0;border-left:15px solid var(--line)}
+.dim span{font:500 20px/1 var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+.tagline{margin:40px 0 0;font:600 92px/1 var(--f-display);color:var(--red)}
+.tagline .wt{display:inline-block;padding-right:6px}
+.cover-meta{margin:34px 0 0;font:500 18px/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.detail{position:absolute;left:1214px;top:132px;width:600px;height:600px}
+.detail svg{position:absolute;inset:0;width:600px;height:600px;fill:none;stroke:var(--line);stroke-width:1.5;overflow:visible}
+.detail .dash{stroke:var(--line-soft);stroke-dasharray:6 8}
+.detail-img{position:absolute;left:40px;top:40px;width:520px;height:520px;border-radius:50%;overflow:hidden;background:var(--bp-deep)}
+.detail-img img{width:100%;height:100%;object-fit:cover;object-position:52% 18%;display:block}
+.detail-label{position:absolute;left:0;top:632px;width:600px;margin:0;text-align:center;font:500 16px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
+.detail-label b{color:var(--red);font-weight:600;margin-right:14px}
+
+/* ---------- 02 origin ---------- */
+.s-origin .left{position:absolute;left:128px;top:124px;width:740px}
+.s-origin .lede{margin-top:36px}
+.quote{margin:52px 0 0;padding:30px 0 0;border-top:1.5px solid var(--line-soft)}
+.quote blockquote{margin:16px 0 0;font:600 54px/1.06 var(--f-display);color:var(--ink);text-wrap:balance}
+.quote blockquote::before{content:"\201C";color:var(--red);margin-right:4px}
+.quote blockquote::after{content:"\201D";color:var(--red);margin-left:2px}
+.rev{position:absolute;left:948px;top:124px;width:844px}
+.rev-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:12px;margin-bottom:18px;border-bottom:2px solid var(--line)}
+.rev-head span{font:600 20px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase}
+.rev-head em{font:500 13px/1 var(--f-mono);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.rev-card .ph{height:268px}
+.rev-row{display:grid;grid-template-columns:48px 1fr auto;align-items:center;height:48px;border:1.5px solid var(--line-soft);border-top:0;font:500 14px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.rev-row b{display:grid;place-items:center;height:100%;border-right:1.5px solid var(--line-soft);color:var(--red);font-weight:700;font-size:16px}
+.rev-row span{padding:0 12px;color:var(--ink)}
+.rev-row em{font-style:normal;color:var(--ink-2);padding-right:12px;white-space:nowrap}
+
+/* ---------- 03 path ---------- */
+.gpa{position:absolute;right:128px;top:146px;display:flex;align-items:flex-start;gap:26px}
+.gpa-n{display:block;font:700 150px/.82 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.gpa-c.now .gpa-n{color:var(--red)}
+.gpa-l{display:block;margin-top:16px;font:500 14px/1.45 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.gpa svg{width:130px;height:40px;margin-top:44px;fill:none;stroke:var(--line);stroke-width:2;overflow:visible}
+.tl{position:absolute;left:128px;top:436px;width:1664px;height:460px}
+.tl svg{position:absolute;left:0;top:0;width:1664px;height:460px;fill:none;stroke-width:2;overflow:visible}
+.tl .solid{stroke:var(--line)}
+.tl .future{stroke:var(--line-soft)}
+.tl-col{position:absolute;top:0;width:312px}
+.tl-col h3{margin:0;font:700 44px/1 var(--f-display);text-transform:uppercase}
+.tl-col .yr{display:block;margin-top:10px;font:500 15px/1 var(--f-mono);letter-spacing:.14em;color:var(--ink-2)}
+.tl-col.now h3,.tl-col.now .yr{color:var(--red)}
+.tl-dot{position:absolute;top:99px;width:24px;height:24px;margin-left:-12px;border-radius:50%;border:2px solid var(--line);background:var(--bp)}
+.tl-dot.done{background:var(--ink-2);border-color:var(--ink-2)}
+.tl-dot.now{background:var(--red);border-color:var(--red)}
+.tl-dot.now::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--red)}
+.is-active .tl-dot.now::after{animation:ring 1.6s ease-out 1.4s 3 both}
+.tl-dot.fut{border-style:dashed;border-color:var(--ink-2)}
+.tl-items{position:absolute;top:160px;margin:0;padding:0;list-style:none;width:312px;display:grid;gap:14px}
+.tl-items li{position:relative;padding-left:20px;font:400 21px/1.32 var(--f-body);color:var(--ink)}
+.tl-items li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:2px;background:var(--red)}
+.tl-items li small{display:block;font:500 13px/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-top:4px}
+.summer{position:absolute;top:66px;width:140px;margin-left:-70px;text-align:center;font:600 13px/1 var(--f-mono);letter-spacing:.14em;color:var(--red)}
+.diamond{position:absolute;top:103px;width:16px;height:16px;margin-left:-8px;background:var(--red);transform:rotate(45deg)}
+
+/* ---------- 04 process ---------- */
+.steps{position:absolute;left:128px;top:340px;width:1664px;display:grid;grid-template-columns:repeat(5,1fr);gap:26px}
+.step{position:relative}
+.step .ph{height:236px}
+.step-n{display:flex;align-items:center;margin:24px -26px 18px 0}
+.step:last-child .step-n{margin-right:0}
+.step-n b{flex:none;width:46px;height:46px;border:2px solid var(--line);border-radius:50%;display:grid;place-items:center;font:600 16px/1 var(--f-mono);background:var(--bp)}
+.step-n i{flex:1;height:2px;background:var(--line-soft);transform-origin:0 50%}
+.step h3{margin:0;font:700 40px/1 var(--f-display);text-transform:uppercase}
+.step p{margin:12px 0 0;font:400 21px/1.45 var(--f-body);color:var(--ink-2)}
+.step.focus .ph{outline:2px solid var(--red);outline-offset:8px}
+.step.focus .step-n b{border-color:var(--red);color:var(--red)}
+.step.focus h3{color:var(--red)}
+.focus-tag{position:absolute;left:0;top:-46px;font:600 14px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.dd{width:100%;height:100%;display:block;fill:none;stroke:var(--line);stroke-width:2}
+.dd .hl{stroke:var(--red)}
+.dd text{fill:var(--ink-2);stroke:none;font:500 11px var(--f-mono);letter-spacing:.1em;text-anchor:middle}
+
+/* ---------- 05 tools ---------- */
+.bom{position:absolute;left:128px;top:320px;width:1664px;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:60px}
+.bom-h{display:flex;align-items:center;gap:16px;padding-bottom:16px;border-bottom:2px solid var(--line)}
+.bom-h b{width:42px;height:42px;display:grid;place-items:center;border:2px solid var(--line);font:600 18px/1 var(--f-mono);color:var(--red)}
+.bom-h h3{margin:0;font:700 36px/1 var(--f-display);text-transform:uppercase}
+.bom-r{display:grid;grid-template-columns:62px 1fr auto;align-items:baseline;gap:10px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.bom-r .no{font:500 14px/1 var(--f-mono);color:var(--ink-2);letter-spacing:.06em}
+.bom-r .nm{font:500 25px/1.15 var(--f-body);color:var(--ink)}
+.bom-r .use{font:500 13px/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--red);text-align:right}
+.bom-col.narrow .bom-r{grid-template-columns:56px 1fr}
+
+/* ---------- 06 sketching ---------- */
+.wall{position:absolute;left:128px;top:300px;width:1150px;display:grid;grid-template-columns:repeat(5,1fr);gap:28px 24px}
+.sk{position:relative;height:276px;transform:rotate(var(--r,0deg));box-shadow:0 16px 30px rgba(3,14,30,.45);background:#e9e6df}
+.sk img{display:block;width:100%;height:100%;object-fit:cover}
+.sk::after{content:"";position:absolute;top:-8px;left:50%;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:var(--red);box-shadow:0 2px 5px rgba(0,0,0,.45)}
+.sk .chip{left:8px;bottom:8px}
+.side-card{position:absolute;left:1340px;top:300px;width:452px}
+.side-card .ph{height:440px}
+.side-card .h3{margin-top:26px}
+.side-card .body{margin-top:12px}
+
+/* ---------- 07 pastarix ---------- */
+.s-pasta .left{position:absolute;left:128px;top:124px;width:620px}
+.s-pasta .lede{margin-top:26px}
+.seq{list-style:none;margin:34px 0 0;padding:0;display:grid;gap:4px}
+.seq li{display:grid;grid-template-columns:50px 1fr;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line-soft);font:500 23px/1.25 var(--f-body)}
+.seq li span{font:600 14px/1 var(--f-mono);color:var(--red);letter-spacing:.08em}
+.seq li.key{color:var(--red)}
+.s-pasta .figs{position:absolute;left:812px;top:150px;display:flex;gap:28px}
+
+/* ---------- 08 lumoring ---------- */
+.s-lumo .left{position:absolute;left:128px;top:124px;width:980px}
+.s-lumo .lede{margin-top:24px}
+.built{position:absolute;right:128px;top:140px;width:500px}
+.built-r{display:grid;grid-template-columns:44px 1fr;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line-soft)}
+.built-r span{font:600 14px/1 var(--f-mono);color:var(--red)}
+.built-r b{font:600 34px/1 var(--f-display);text-transform:uppercase;font-weight:600}
+.strip{position:absolute;left:128px;top:462px;width:1664px;height:400px}
+.strip .fig{position:absolute;top:0;width:298px}
+.strip .ph{height:330px}
+.strip svg.arr{position:absolute;top:150px;width:30px;height:30px;fill:none;stroke:var(--red);stroke-width:2.5;overflow:visible}
+
+/* ---------- 09 hydra ---------- */
+.s-hydra .hero{position:absolute;left:128px;top:124px;width:560px}
+.s-hydra .hero .ph{height:700px}
+.s-hydra .right{position:absolute;left:752px;top:124px;width:1040px}
+.s-hydra .lede{margin-top:24px}
+.film{position:absolute;left:752px;top:470px;width:1040px;height:380px}
+.film .fig{position:absolute;top:0;width:190px}
+.film .ph{height:150px}
+.film svg{position:absolute;left:0;top:178px;width:1040px;height:20px;fill:none;stroke:var(--line);stroke-width:2;overflow:visible}
+.film .when{position:absolute;top:214px;width:190px;font:600 15px/1 var(--f-mono);letter-spacing:.12em;color:var(--red);text-transform:uppercase}
+.film .what{position:absolute;top:240px;width:190px;font:600 26px/1.05 var(--f-display);text-transform:uppercase}
+.film .fin{position:absolute;left:0;top:320px;width:1040px;padding-top:18px;border-top:1px solid var(--line-soft)}
+
+/* ---------- 10 vacuum ---------- */
+.s-vac .left{position:absolute;left:128px;top:296px;width:480px}
+.panel{position:absolute;left:656px;top:296px;width:1136px;height:384px;background:var(--paper);display:flex;outline:1px solid var(--line-soft);outline-offset:8px}
+.panel .ph{flex:none;width:700px;height:384px;background:transparent}
+.legend{flex:1;padding:34px 36px 30px 10px;color:#123a6b}
+.legend p{margin:0 0 16px;font:600 14px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:#a24b10}
+.legend li{font:600 26px/1 var(--f-display);text-transform:uppercase;padding:9px 0;border-bottom:1px solid rgba(18,58,107,.18);display:flex;gap:14px;align-items:baseline}
+.legend li span{font:600 13px/1 var(--f-mono);color:#a24b10}
+.legend ol{list-style:none;margin:0;padding:0}
+.thumbs{position:absolute;left:656px;top:706px;width:1136px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.thumbs .ph{height:186px}
+
+/* ---------- 11 chaise ---------- */
+.s-chaise .left{position:absolute;left:128px;top:124px;width:560px}
+.s-chaise .body{margin-top:26px;color:var(--ink);font-size:26px}
+.facts{margin:30px 0 0;padding:0;list-style:none}
+.facts li{padding:10px 0;border-bottom:1px solid var(--line-soft);font:500 15px/1.2 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.facts li b{color:var(--red);font-weight:600;margin-right:10px}
+.pair{position:absolute;left:752px;top:134px;width:1040px;height:760px}
+.pair .fig{position:absolute;top:0;width:480px}
+.pair .ph{height:680px}
+.pair svg{position:absolute;left:490px;top:322px;width:60px;height:36px;fill:none;stroke:var(--red);stroke-width:2.5;overflow:visible}
+
+/* ---------- 12 campus ---------- */
+.half{position:absolute;top:292px;width:816px;height:600px}
+.half .fig{position:absolute;left:0;top:0;width:380px}
+.half .ph{height:560px}
+.half .txt{position:absolute;left:418px;top:0;width:398px}
+.half .h3{font-size:50px}
+.half .body{margin-top:18px;color:var(--ink)}
+.swatches{display:flex;gap:8px;margin-top:30px}
+.swatches i{display:block;width:44px;height:44px;outline:1px solid var(--line-soft);outline-offset:3px}
+.sw-l{margin-top:14px}
+
+/* ---------- 13 vortex ---------- */
+.s-grill .lede{margin-top:20px}
+.grill{position:absolute;left:128px;top:348px;width:1664px;display:flex;gap:30px;align-items:flex-start}
+.grill .big .ph{width:820px;height:500px}
+.grill .post .ph{width:333px;height:500px}
+
+/* ---------- 14 electrolux ---------- */
+.s-elx .hero{position:absolute;left:128px;top:124px;width:440px}
+.s-elx .hero .ph{height:700px}
+.s-elx .right{position:absolute;left:632px;top:124px;width:1160px}
+.s-elx .lede{margin-top:22px}
+.pull{margin:34px 0 0;padding:26px 0 0;border-top:1.5px solid var(--line-soft)}
+.pull blockquote{margin:0;font:600 44px/1.1 var(--f-display);color:var(--ink);text-wrap:balance}
+.pull blockquote em{font-style:normal;color:var(--red)}
+.pull p{margin:14px 0 0}
+.elx-row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+.elx-row .ph{height:184px}
+
+/* ---------- 15 note ---------- */
+.s-note{background:rgba(7,26,51,.62)}
+.note{position:absolute;left:128px;top:236px;width:1560px}
+.note .big{margin:30px 0 0;font:600 92px/1.02 var(--f-display);color:var(--ink);text-wrap:balance}
+.note .hl{background-image:linear-gradient(transparent 82%,var(--red) 82%,var(--red) 94%,transparent 94%);background-repeat:no-repeat;background-size:100% 100%}
+.is-active .note .hl{animation:mark 1.1s var(--ease) var(--d,1.2s) both}
+.note .after{margin:48px 0 0;font:500 44px/1.15 var(--f-display);color:var(--ink-2)}
+
+/* ---------- 16 next ---------- */
+.future-svg{position:absolute;left:128px;top:338px;width:1664px;height:40px;fill:none;stroke-width:2;overflow:visible}
+.cards{position:absolute;left:128px;top:396px;width:1664px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.card{position:relative;padding:34px 34px 40px;border:1.5px solid var(--line-soft);background:rgba(7,26,51,.38)}
+.card::before{content:"";position:absolute;left:50%;top:-58px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--bp);border:2px solid var(--line)}
+.card.hot{border-color:var(--red)}
+.card.hot::before{background:var(--red);border-color:var(--red)}
+.card .tag{margin:0;font:600 14px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.card .h3{margin-top:18px;font-size:54px}
+.card .body{margin-top:16px}
+.s-next .close{position:absolute;left:128px;top:792px;width:1500px}
+
+/* ---------- 17 thanks ---------- */
+.s-thanks .left{position:absolute;left:128px;top:150px;width:1160px}
+.s-thanks .mega{margin:22px 0 0;font-size:220px}
+.s-thanks .lede{margin-top:40px;font-size:36px}
+.s-thanks .body{margin-top:18px;font-size:28px}
+.s-thanks .tagline{margin-top:44px;font-size:64px}
+.qr{position:absolute;left:1392px;top:190px;width:400px}
+.qr-box{width:340px;height:340px;padding:26px;background:var(--paper);outline:1px solid var(--line-soft);outline-offset:8px}
+.qr-box svg{display:block;width:100%;height:100%}
+.qr .h3{margin-top:34px;font-size:40px}
+.qr .mono-l{margin-top:12px;text-transform:none;letter-spacing:.04em;font-size:15px}
+
+/* ---------- presenter-only previews ---------- */
+.static .slide,.static .slide *{animation:none!important;transition:none!important}
+.static .slide{opacity:1;visibility:visible}
+.noanim .slide,.noanim .slide *,.noanim .tb-v{animation:none!important;transition:none!important}
+
+/* ---------- on-screen controls (outside the sheet) ---------- */
+.ctrls{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:20;display:flex;gap:8px;opacity:0;transition:opacity .3s;pointer-events:none}
+.ctrls.show{opacity:1;pointer-events:auto}
+.ctrls button,.ov button,.ov-close{font:500 13px/1 var(--f-mono);color:var(--ink);background:rgba(7,26,51,.9);border:1px solid rgba(206,226,250,.35);border-radius:8px;cursor:pointer}
+.ctrls button{width:46px;height:46px;display:grid;place-items:center;padding:0}
+.ctrls svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ctrls button:hover,.ov button:hover{border-color:var(--red)}
+button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.ov{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:rgba(4,14,28,.9);padding:16px}
+.ov-panel{width:min(980px,100%);max-height:100%;overflow:auto;background:var(--bp);border:2px solid var(--line);padding:28px 30px}
+.ov-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:16px;border-bottom:2px solid var(--line)}
+.ov-top h2{margin:0;font:700 34px/1 var(--f-display);text-transform:uppercase}
+.ov-close{padding:10px 14px}
+.ov-list{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0 24px}
+.ov-list button{width:100%;display:grid;grid-template-columns:44px 1fr;gap:8px;align-items:baseline;text-align:left;padding:12px 4px;border:0;border-bottom:1px solid var(--line-soft);border-radius:0;background:transparent;font:500 18px/1.2 var(--f-body)}
+.ov-list button span{font:600 13px/1 var(--f-mono);color:var(--red)}
+.ov-list button.cur{color:var(--red)}
+.keys{margin:20px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px 24px;font:500 13px/1.5 var(--f-mono);color:var(--ink-2)}
+.keys kbd{display:inline-block;min-width:26px;padding:2px 6px;margin-right:8px;border:1px solid var(--line-soft);border-radius:4px;color:var(--ink);text-align:center;font:inherit}
+.black{position:fixed;inset:0;z-index:40;background:#000;cursor:none}
+.toast{position:fixed;left:50%;bottom:max(24px,env(safe-area-inset-bottom,0px));z-index:50;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:14px 18px;background:var(--bp-deep);border:1px solid var(--red);font:500 14px/1.4 var(--f-mono);color:var(--ink)}
+.hud{position:fixed;top:max(12px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));z-index:20;padding:8px 12px;background:rgba(7,26,51,.9);border:1px solid var(--line-soft);font:500 15px/1 var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.hud b{color:var(--red);font-weight:600}
+
+@media (prefers-reduced-motion:reduce){
+  .slide,.slide *,.tb-v.flip{animation:none!important;transition:none!important}
+}
+</style>
+<!--BODY-->
+<div class="viewport" id="viewport">
+<div class="stage" id="stage">
+<div class="grain"></div>
+
+<!-- ===================== 01 COVER ===================== -->
+<section class="slide s-cover is-active" data-title="Mohamed Ismail" data-level="Level 4 of 5" data-time="20" aria-label="Cover">
+  <div class="cover-l">
+    <p class="eyebrow r" style="--d:.15s">Best Student Recognition · Product Design</p>
+    <h1 class="mega"><span class="ln"><span class="up" style="--d:.3s">Mohamed</span></span><span class="ln"><span class="up" style="--d:.46s">Ismail</span></span></h1>
+    <div class="dim" id="coverDim"><i class="l gx" style="--d:.95s"></i><span class="f" style="--d:1.15s">Product designer</span><i class="r2 gx" style="--d:.95s"></i></div>
+    <p class="tagline"><span class="wt" style="--d:1.3s">Designed to be made.</span></p>
+    <p class="cover-meta r" style="--d:1.7s">Faculty of Applied Arts · Badr University in Cairo</p>
+  </div>
+  <div class="detail">
+    <svg viewBox="0 0 600 600" aria-hidden="true">
+      <circle class="dr" pathLength="1" cx="300" cy="300" r="282" style="--d:.5s"/>
+      <circle class="dash f" cx="300" cy="300" r="296" style="--d:1.2s"/>
+      <line class="dr" pathLength="1" x1="300" y1="-26" x2="300" y2="34" style="--d:1s"/>
+      <line class="dr" pathLength="1" x1="300" y1="566" x2="300" y2="626" style="--d:1s"/>
+      <line class="dr" pathLength="1" x1="-26" y1="300" x2="34" y2="300" style="--d:1s"/>
+      <line class="dr" pathLength="1" x1="566" y1="300" x2="626" y2="300" style="--d:1s"/>
+    </svg>
+    <div class="detail-img f" style="--d:.7s"><img src="assets/me-electrolux.jpg" alt="Mohamed Ismail holding his Electrolux Group internship certificate"></div>
+    <p class="detail-label r" style="--d:1.4s"><b>Detail A</b>Scale 1:1</p>
+  </div>
+</section>
+
+<!-- ===================== 02 ORIGIN ===================== -->
+<section class="slide s-origin" data-title="Where it started" data-level="Childhood to now" data-time="40" aria-label="Where it started">
+  <div class="left">
+    <p class="eyebrow r">Where it started</p>
+    <h2 class="h1 r" style="--d:.08s">Why product design</h2>
+    <p class="lede r" style="--d:.25s">I learned product design from my father, who is a product designer himself. Becoming one has been my goal since I was a child.</p>
+    <div class="quote r" style="--d:.5s">
+      <span class="mono-l">How I like to work</span>
+      <blockquote>I want to do my job to the fullest, while having fun.</blockquote>
+    </div>
+  </div>
+  <div class="rev">
+    <div class="rev-head r" style="--d:.2s"><span>Revision history</span><em>Me, level by level</em></div>
+    <div class="rev-grid">
+      <div class="rev-card r" style="--d:.35s"><div class="ph w" style="--d:.45s"><img src="assets/me-stickydarts.jpg" alt="Mohamed presenting his Sticky Darts toy board" style="object-position:40% 30%"></div><div class="rev-row"><b>A</b><span>Presenting Sticky Darts</span><em>Level 2</em></div></div>
+      <div class="rev-card r" style="--d:.5s"><div class="ph w" style="--d:.6s"><img src="assets/me-display.jpg" alt="Mohamed beside his framed marker sketches" style="object-position:50% 35%"></div><div class="rev-row"><b>B</b><span>Sketches on display</span><em>Level 2</em></div></div>
+      <div class="rev-card r" style="--d:.65s"><div class="ph w" style="--d:.75s"><img src="assets/me-mural.jpg" alt="Mohamed in front of the Pharaonic mural he designed" style="object-position:38% 62%"></div><div class="rev-row"><b>C</b><span>Campus mural</span><em>BUC</em></div></div>
+      <div class="rev-card r" style="--d:.8s"><div class="ph w" style="--d:.9s"><img src="assets/me-electrolux.jpg" alt="Mohamed at the Electrolux Group internship" style="object-position:50% 30%"></div><div class="rev-row"><b>D</b><span>Electrolux internship</span><em>Summer 2026</em></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 PATH ===================== -->
+<section class="slide s-path" data-title="My path" data-level="2023 to 2028" data-time="40" aria-label="My path through the department">
+  <p class="eyebrow r">Foundation to graduation · 2023 to 2028</p>
+  <h2 class="h1 r" style="--d:.08s">My path through<br>the department</h2>
+  <div class="gpa">
+    <div class="gpa-c r" style="--d:.35s"><span class="gpa-n">3.0</span><span class="gpa-l">GPA entering<br>the department</span></div>
+    <svg viewBox="0 0 130 40" aria-hidden="true"><path class="dr" pathLength="1" d="M0 20H124" style="--d:.7s"/><path class="dr" pathLength="1" d="M110 8L126 20L110 32" style="--d:1.1s"/></svg>
+    <div class="gpa-c now r" style="--d:.8s"><span class="gpa-n" data-count="3.5" data-from="3.0" data-dec="1" data-delay="900">3.5</span><span class="gpa-l">GPA today<br>Level 4</span></div>
+  </div>
+  <div class="tl">
+    <svg viewBox="0 0 1664 460" aria-hidden="true">
+      <path class="solid dr" pathLength="1" d="M12 111H1011" style="--d:.5s"/>
+      <path class="future f" d="M1011 111H1664" style="--d:1.5s;stroke-dasharray:8 10"/>
+    </svg>
+    <div class="tl-col r" style="left:0;--d:.6s"><h3>Foundation</h3><span class="yr">2023/24</span></div>
+    <div class="tl-col r" style="left:333px;--d:.75s"><h3>Level 2</h3><span class="yr">2024/25</span></div>
+    <div class="tl-col r" style="left:666px;--d:.9s"><h3>Level 3</h3><span class="yr">2025/26</span></div>
+    <div class="tl-col now r" style="left:999px;--d:1.05s"><h3>Level 4</h3><span class="yr">2026/27 · Now</span></div>
+    <div class="tl-col r" style="left:1332px;--d:1.2s"><h3>Level 5</h3><span class="yr">2027/28</span></div>
+    <i class="tl-dot done f" style="left:12px;--d:.6s"></i>
+    <i class="tl-dot done f" style="left:345px;--d:.75s"></i>
+    <i class="tl-dot done f" style="left:678px;--d:.9s"></i>
+    <i class="tl-dot now f" style="left:1011px;--d:1.05s"></i>
+    <i class="tl-dot fut f" style="left:1344px;--d:1.2s"></i>
+    <span class="summer f" style="left:925px;--d:1.25s">Summer 2026</span>
+    <i class="diamond f" style="left:925px;--d:1.25s"></i>
+    <ul class="tl-items r" style="left:0;--d:.8s">
+      <li>Foundation year<small>Faculty of Applied Arts</small></li>
+      <li>Entered Product Design with a 3.0 GPA</li>
+    </ul>
+    <ul class="tl-items r" style="left:333px;--d:.95s">
+      <li>Marker sketching<small>Design Display</small></li>
+      <li>Sticky Darts<small>Design Techniques</small></li>
+      <li>PASTARIX pasta maker</li>
+      <li>LumoRing lighting</li>
+    </ul>
+    <ul class="tl-items r" style="left:666px;--d:1.1s">
+      <li>Hydra Schmidt Coupe</li>
+      <li>Ergonomic vacuum cleaner<small>Product Design 2</small></li>
+      <li>Modular chaise longue<small>Training 2</small></li>
+    </ul>
+    <ul class="tl-items r" style="left:999px;--d:1.25s">
+      <li>Electrolux Group internship<small>Summer 2026</small></li>
+      <li>VORTEX &amp; VERTIX<small>Product Design 3</small></li>
+      <li>GPA 3.5 and Best Student Recognition</li>
+    </ul>
+    <ul class="tl-items r" style="left:1332px;--d:1.4s">
+      <li>Final year</li>
+      <li>Graduation 2028</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== 04 PROCESS ===================== -->
+<section class="slide s-process" data-title="My process" data-level="How I study" data-time="45" aria-label="My process">
+  <p class="eyebrow r">My studying process</p>
+  <h2 class="h1 r" style="--d:.08s">From brief to product</h2>
+  <div class="steps">
+    <div class="step r" style="--d:.3s">
+      <div class="ph ol">
+        <svg class="dd" viewBox="0 0 300 236" aria-label="Double Diamond: discover, define, develop, deliver">
+          <path class="dr" pathLength="1" d="M22 106L86 46L150 106L86 166Z" style="--d:.6s"/>
+          <path class="dr hl" pathLength="1" d="M150 106L214 46L278 106L214 166Z" style="--d:.9s"/>
+          <text x="54" y="204">DISCOVER</text><text x="118" y="222">DEFINE</text><text x="182" y="204">DEVELOP</text><text x="246" y="222">DELIVER</text>
+        </svg>
+      </div>
+      <div class="step-n"><b>01</b><i class="gx" style="--d:.9s"></i></div>
+      <h3>Research</h3>
+      <p>I use the Double Diamond method. This stage takes two to four weeks.</p>
+    </div>
+    <div class="step focus r" style="--d:.45s">
+      <span class="focus-tag">Where I focus most</span>
+      <div class="ph w" style="--d:.55s"><img src="assets/sk-ideation.jpg" alt="Ideation sketch page with marker renderings"></div>
+      <div class="step-n"><b>02</b><i class="gx" style="--d:1.05s"></i></div>
+      <h3>Sketch &amp; ideate</h3>
+      <p>The stage I give the most attention, because it shapes every stage after it.</p>
+    </div>
+    <div class="step r" style="--d:.6s">
+      <div class="ph ol w" style="--d:.7s"><img src="assets/hydra-foam.jpg" alt="Blue foam study model of the Hydra Coupe"></div>
+      <div class="step-n"><b>03</b><i class="gx" style="--d:1.2s"></i></div>
+      <h3>Develop</h3>
+      <p>I refine the strongest idea: its form, its ergonomics and how it will be made.</p>
+    </div>
+    <div class="step r" style="--d:.75s">
+      <div class="ph ol paper w" style="--d:.85s"><img src="assets/vac-exploded.jpg" alt="Exploded render of the vacuum cleaner"></div>
+      <div class="step-n"><b>04</b><i class="gx" style="--d:1.35s"></i></div>
+      <h3>CAD &amp; render</h3>
+      <p>A full 3D model, renders and engineering drawings.</p>
+    </div>
+    <div class="step r" style="--d:.9s">
+      <div class="ph ol w" style="--d:1s"><img src="assets/lumo-welded.jpg" alt="Welded steel body of the LumoRing lamp"></div>
+      <div class="step-n"><b>05</b></div>
+      <h3>Prototype</h3>
+      <p>A physical model or a real build, often with CNC, metal or wood.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 05 TOOLS ===================== -->
+<section class="slide s-tools" data-title="Tools" data-level="Parts list" data-time="30" aria-label="Tools I design and build with">
+  <p class="eyebrow r">Parts list</p>
+  <h2 class="h1 r" style="--d:.08s">The tools I design and build with</h2>
+  <div class="bom">
+    <div class="bom-col">
+      <div class="bom-h r" style="--d:.25s"><b>A</b><h3>Making</h3></div>
+      <div class="bom-r r" style="--d:.35s"><span class="no">A.01</span><span class="nm">CNC routing</span><span class="use">Chaise · Hydra</span></div>
+      <div class="bom-r r" style="--d:.4s"><span class="no">A.02</span><span class="nm">Laser cutting</span><span class="use">Heritage columns</span></div>
+      <div class="bom-r r" style="--d:.45s"><span class="no">A.03</span><span class="nm">Sheet metal fabrication</span><span class="use">LumoRing</span></div>
+      <div class="bom-r r" style="--d:.5s"><span class="no">A.04</span><span class="nm">Welding &amp; rolling</span><span class="use">LumoRing</span></div>
+      <div class="bom-r r" style="--d:.55s"><span class="no">A.05</span><span class="nm">Precision lathing</span><span class="use">LumoRing</span></div>
+      <div class="bom-r r" style="--d:.6s"><span class="no">A.06</span><span class="nm">Woodworking</span><span class="use">Hydra Coupe</span></div>
+      <div class="bom-r r" style="--d:.65s"><span class="no">A.07</span><span class="nm">Furniture manufacturing</span><span class="use">Chaise longue</span></div>
+      <div class="bom-r r" style="--d:.7s"><span class="no">A.08</span><span class="nm">Physical prototyping</span><span class="use">PASTARIX · Zanussi</span></div>
+    </div>
+    <div class="bom-col narrow">
+      <div class="bom-h r" style="--d:.35s"><b>B</b><h3>CAD &amp; visuals</h3></div>
+      <div class="bom-r r" style="--d:.45s"><span class="no">B.01</span><span class="nm">SolidWorks</span></div>
+      <div class="bom-r r" style="--d:.5s"><span class="no">B.02</span><span class="nm">KeyShot</span></div>
+      <div class="bom-r r" style="--d:.55s"><span class="no">B.03</span><span class="nm">AutoCAD</span></div>
+      <div class="bom-r r" style="--d:.6s"><span class="no">B.04</span><span class="nm">Blender</span></div>
+      <div class="bom-r r" style="--d:.65s"><span class="no">B.05</span><span class="nm">3ds Max</span></div>
+      <div class="bom-r r" style="--d:.7s"><span class="no">B.06</span><span class="nm">Photoshop</span></div>
+      <div class="bom-r r" style="--d:.75s"><span class="no">B.07</span><span class="nm">Illustrator</span></div>
+      <div class="bom-r r" style="--d:.8s"><span class="no">B.08</span><span class="nm">Shapr3D on iPad</span></div>
+    </div>
+    <div class="bom-col narrow">
+      <div class="bom-h r" style="--d:.45s"><b>C</b><h3>Method</h3></div>
+      <div class="bom-r r" style="--d:.55s"><span class="no">C.01</span><span class="nm">Double Diamond research</span></div>
+      <div class="bom-r r" style="--d:.6s"><span class="no">C.02</span><span class="nm">Ergonomic analysis</span></div>
+      <div class="bom-r r" style="--d:.65s"><span class="no">C.03</span><span class="nm">Sketching &amp; ideation</span></div>
+      <div class="bom-r r" style="--d:.7s"><span class="no">C.04</span><span class="nm">Concept generation</span></div>
+      <div class="bom-r r" style="--d:.75s"><span class="no">C.05</span><span class="nm">Technical drawing &amp; GD&amp;T</span></div>
+      <div class="bom-r r" style="--d:.8s"><span class="no">C.06</span><span class="nm">Design for manufacturing</span></div>
+      <div class="bom-r r" style="--d:.85s"><span class="no">C.07</span><span class="nm">Product development</span></div>
+      <div class="bom-r r" style="--d:.9s"><span class="no">C.08</span><span class="nm">Project &amp; time management</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 06 SKETCHING ===================== -->
+<section class="slide s-sketch" data-title="Sketching" data-level="Level 2 · 2024/25" data-time="35" aria-label="Learning to think on paper">
+  <p class="eyebrow r">Level 2 · 2024/25 · Design Display &amp; Design Techniques</p>
+  <h2 class="h1 r" style="--d:.08s">Learning to think on paper</h2>
+  <div class="wall">
+    <div class="sk pin" style="--r:-2deg;--d:.25s"><img src="assets/zmat.jpg" alt="Z-MaT presentation board with marker sketches"></div>
+    <div class="sk pin" style="--r:1.5deg;--d:.33s"><img src="assets/sk-robot.jpg" alt="Marker sketch of an orange robotic arm"></div>
+    <div class="sk pin" style="--r:-1deg;--d:.41s"><img src="assets/sk-cooker.jpg" alt="Marker sketch of a blue cooker"></div>
+    <div class="sk pin" style="--r:2deg;--d:.49s"><img src="assets/sk-camera.jpg" alt="Marker sketch of a red camera"></div>
+    <div class="sk pin" style="--r:-1.5deg;--d:.57s"><img src="assets/sk-gripper.jpg" alt="Marker sketch of a robotic gripper"></div>
+    <div class="sk pin" style="--r:1deg;--d:.65s"><img src="assets/sk-shoe.jpg" alt="Marker sketch of a shoe inspired by a dragonfly"></div>
+    <div class="sk pin" style="--r:-2deg;--d:.73s"><img src="assets/sk-helmet.jpg" alt="Marker sketch of a purple helmet"></div>
+    <div class="sk pin" style="--r:1.5deg;--d:.81s"><img src="assets/sk-torch.jpg" alt="Marker sketch of an orange torch"></div>
+    <div class="sk pin" style="--r:-1deg;--d:.89s"><img src="assets/sk-scissors.jpg" alt="Marker sketch of scissors"></div>
+    <div class="sk pin" style="--r:2deg;--d:.97s"><img src="assets/painting.jpg" alt="Portrait painting of a man in a cowboy hat" style="object-position:50% 30%"><span class="chip">Painting</span></div>
+  </div>
+  <div class="side-card r" style="--d:.5s">
+    <div class="ph ol w" style="--d:.6s"><img src="assets/stickydarts.jpg" alt="Sticky Darts presentation board with a laptop showing the 3D model"></div>
+    <h3 class="h3">Sticky Darts</h3>
+    <p class="body">A kids' toy I designed in the Design Techniques course.</p>
+  </div>
+</section>
+
+<!-- ===================== 07 PASTARIX ===================== -->
+<section class="slide s-pasta" data-title="PASTARIX" data-level="Level 2 · Term 2" data-time="35" aria-label="PASTARIX smart pasta maker">
+  <div class="left">
+    <p class="eyebrow r">Level 2 · Term 2 · Smart pasta maker</p>
+    <h2 class="h1 r" style="--d:.08s">PASTARIX</h2>
+    <p class="lede r" style="--d:.2s">A kitchen appliance that kneads the dough and shapes the pasta in one compact machine.</p>
+    <ol class="seq">
+      <li class="r" style="--d:.35s"><span>01</span>User research</li>
+      <li class="r" style="--d:.42s"><span>02</span>Ergonomic analysis</li>
+      <li class="r" style="--d:.49s"><span>03</span>Concept development</li>
+      <li class="r" style="--d:.56s"><span>04</span>Full CAD model in SolidWorks</li>
+      <li class="r" style="--d:.63s"><span>05</span>Rendering in KeyShot</li>
+      <li class="r" style="--d:.7s"><span>06</span>Engineering drawings</li>
+      <li class="r key" style="--d:.77s"><span>07</span>Physical prototype</li>
+    </ol>
+  </div>
+  <div class="figs">
+    <figure class="fig r" style="--d:.3s"><div class="ph ol w" style="width:552px;height:552px;--d:.4s"><img src="assets/pastarix-render.jpg" alt="Render of the PASTARIX pasta maker in a kitchen, extruding pasta"></div><figcaption class="cap"><b>Fig 7.1</b>Render</figcaption></figure>
+    <figure class="fig r" style="--d:.5s"><div class="ph ol w" style="width:400px;height:552px;--d:.6s"><img src="assets/pastarix-board.jpg" alt="PASTARIX presentation board next to the physical prototype"></div><figcaption class="cap"><b>Fig 7.2</b>Prototype and board</figcaption></figure>
+  </div>
+</section>
+
+<!-- ===================== 08 LUMORING ===================== -->
+<section class="slide s-lumo" data-title="LumoRing" data-level="Level 2 · 2024/25" data-time="40" aria-label="LumoRing lighting fixture">
+  <div class="left">
+    <p class="eyebrow r">Level 2 · 2024/25 · Lighting fixture</p>
+    <h2 class="h1 r" style="--d:.08s">LumoRing</h2>
+    <p class="lede r" style="--d:.2s">The future of functional lighting: a circular lamp taken from a concept to a finished steel piece, built with metalworkers in the workshop.</p>
+  </div>
+  <div class="built">
+    <p class="mono-l r" style="--d:.25s;margin:0 0 6px">Built with</p>
+    <div class="built-r r" style="--d:.32s"><span>01</span><b>Sheet metal</b></div>
+    <div class="built-r r" style="--d:.39s"><span>02</span><b>Rolling</b></div>
+    <div class="built-r r" style="--d:.46s"><span>03</span><b>Welding</b></div>
+    <div class="built-r r" style="--d:.53s"><span>04</span><b>Precision lathing</b></div>
+  </div>
+  <div class="strip">
+    <figure class="fig r" style="left:0;--d:.45s"><div class="ph ol w" style="--d:.5s"><img src="assets/lumo-render.jpg" alt="Dark studio render of the LumoRing lamp"></div><figcaption class="cap"><b>01</b>Render</figcaption></figure>
+    <svg class="arr" viewBox="0 0 30 30" style="left:306px" aria-hidden="true"><path class="dr" pathLength="1" d="M2 15H27M18 6L27 15L18 24" style="--d:.8s"/></svg>
+    <figure class="fig r" style="left:341px;--d:.6s"><div class="ph ol w" style="--d:.65s"><img src="assets/lumo-rolled.jpg" alt="Rolled steel strip before welding"></div><figcaption class="cap"><b>02</b>Rolled steel</figcaption></figure>
+    <svg class="arr" viewBox="0 0 30 30" style="left:647px" aria-hidden="true"><path class="dr" pathLength="1" d="M2 15H27M18 6L27 15L18 24" style="--d:.95s"/></svg>
+    <figure class="fig r" style="left:683px;--d:.75s"><div class="ph ol w" style="--d:.8s"><img src="assets/lumo-lathe.jpg" alt="Steel part turning on a lathe"></div><figcaption class="cap"><b>03</b>On the lathe</figcaption></figure>
+    <svg class="arr" viewBox="0 0 30 30" style="left:989px" aria-hidden="true"><path class="dr" pathLength="1" d="M2 15H27M18 6L27 15L18 24" style="--d:1.1s"/></svg>
+    <figure class="fig r" style="left:1024px;--d:.9s"><div class="ph ol w" style="--d:.95s"><img src="assets/lumo-welded.jpg" alt="Welded LumoRing body outdoors" style="object-position:60% 50%"></div><figcaption class="cap"><b>04</b>Welded form</figcaption></figure>
+    <svg class="arr" viewBox="0 0 30 30" style="left:1330px" aria-hidden="true"><path class="dr" pathLength="1" d="M2 15H27M18 6L27 15L18 24" style="--d:1.25s"/></svg>
+    <figure class="fig r" style="left:1366px;--d:1.05s"><div class="ph ol w" style="--d:1.1s"><img src="assets/lumo-expo.jpg" alt="Finished LumoRing lamp on display with its poster" style="object-position:60% 55%"></div><figcaption class="cap"><b>05</b>Exhibited</figcaption></figure>
+  </div>
+</section>
+
+<!-- ===================== 09 HYDRA ===================== -->
+<section class="slide s-hydra" data-title="Hydra Schmidt Coupe" data-level="Level 3 · Term 1" data-time="40" aria-label="Hydra Schmidt Coupe replica">
+  <figure class="fig hero r" style="--d:.2s"><div class="ph ol w" style="--d:.3s"><img src="assets/hydra-final.jpg" alt="Finished wood and brass Hydra Schmidt Coupe replica on red velvet" style="object-position:40% 60%"></div><figcaption class="cap"><b>Fig 9.1</b>Finished in wood and brass</figcaption></figure>
+  <div class="right">
+    <p class="eyebrow r">Level 3 · Term 1 · Solo · About two months</p>
+    <h2 class="h1 r" style="--d:.08s">Hydra Schmidt Coupe</h2>
+    <p class="lede r" style="--d:.2s">A detailed replica of the car from <i>Captain America: The First Avenger</i>, made in wood and brass with CNC machining, woodworking and hand finishing.</p>
+  </div>
+  <div class="film">
+    <figure class="fig r" style="left:0;--d:.45s"><div class="ph ol w" style="--d:.5s"><img src="assets/hydra-cad.jpg" alt="Wireframe CAD model of the car"></div></figure>
+    <figure class="fig r" style="left:212px;--d:.55s"><div class="ph ol w" style="--d:.6s"><img src="assets/hydra-foam.jpg" alt="Blue foam study model"></div></figure>
+    <figure class="fig r" style="left:425px;--d:.65s"><div class="ph ol w" style="--d:.7s"><img src="assets/hydra-model.jpg" alt="White scale model of the car body"></div></figure>
+    <figure class="fig r" style="left:637px;--d:.75s"><div class="ph ol w" style="--d:.8s"><img src="assets/hydra-cnc.jpg" alt="Car body being carved from wood" style="object-position:50% 40%"></div></figure>
+    <figure class="fig r" style="left:850px;--d:.85s"><div class="ph ol w" style="--d:.9s"><img src="assets/hydra-parts.jpg" alt="Carved wooden parts beside the white model"></div></figure>
+    <svg viewBox="0 0 1040 20" aria-hidden="true"><path class="dr" pathLength="1" d="M0 10H1040" style="--d:.9s"/><circle cx="6" cy="10" r="6" class="f" style="--d:1s;fill:var(--ink-2);stroke:none"/><circle cx="218" cy="10" r="6" class="f" style="--d:1.05s;fill:var(--ink-2);stroke:none"/><circle cx="431" cy="10" r="6" class="f" style="--d:1.1s;fill:var(--ink-2);stroke:none"/><circle cx="643" cy="10" r="6" class="f" style="--d:1.15s;fill:var(--ink-2);stroke:none"/><circle cx="856" cy="10" r="6" class="f" style="--d:1.2s;fill:var(--ink-2);stroke:none"/><circle cx="1034" cy="10" r="7" class="f" style="--d:1.3s;fill:var(--red);stroke:none"/></svg>
+    <span class="when f" style="left:0;--d:1s">CAD</span><span class="what f" style="left:0;--d:1s">3D model</span>
+    <span class="when f" style="left:212px;--d:1.05s">21 Oct 2025</span><span class="what f" style="left:212px;--d:1.05s">Foam study</span>
+    <span class="when f" style="left:425px;--d:1.1s">05 Nov 2025</span><span class="what f" style="left:425px;--d:1.1s">Scale model</span>
+    <span class="when f" style="left:637px;--d:1.15s">10 Nov 2025</span><span class="what f" style="left:637px;--d:1.15s">Carving the body</span>
+    <span class="when f" style="left:850px;--d:1.2s">25 Nov 2025</span><span class="what f" style="left:850px;--d:1.2s">Parts</span>
+    <div class="fin r" style="--d:1.35s"><span class="mono-l"><b style="color:var(--red);font-weight:600">12 Jan 2026</b> &nbsp;Finished and presented</span></div>
+  </div>
+</section>
+
+<!-- ===================== 10 VACUUM ===================== -->
+<section class="slide s-vac" data-title="Ergonomic vacuum" data-level="Level 3 · 2025/26" data-time="35" aria-label="Ergonomic vacuum cleaner">
+  <p class="eyebrow r">Level 3 · 2025/26 · Product Design 2</p>
+  <h2 class="h1 r" style="--d:.08s">Ergonomic vacuum cleaner</h2>
+  <div class="left">
+    <p class="body r" style="--d:.2s;color:var(--ink);font-size:26px">A user-centred redesign of the stick vacuum that reduces fatigue and makes it easier to use. The form study started from the leopard.</p>
+    <figure class="fig r" style="--d:.35s;margin-top:34px"><div class="ph ol paper w" style="height:174px;--d:.45s"><img src="assets/research-leopard.jpg" alt="Form study from a leopard's head and skull" style="object-fit:cover;object-position:50% 20%"></div><figcaption class="cap"><b>Fig 10.1</b>Form study: the leopard</figcaption></figure>
+  </div>
+  <div class="panel r" style="--d:.3s">
+    <div class="ph w" style="--d:.4s"><img src="assets/vac-hero.jpg" alt="Render of the vacuum cleaner on white" style="object-fit:contain;mix-blend-mode:multiply"></div>
+    <div class="legend">
+      <p>Components</p>
+      <ol>
+        <li><span>01</span>Control screen</li>
+        <li><span>02</span>Bending stick</li>
+        <li><span>03</span>Suction fan</li>
+        <li><span>04</span>Dust filter</li>
+        <li><span>05</span>Dust cup</li>
+        <li><span>06</span>Front suction</li>
+      </ol>
+    </div>
+  </div>
+  <div class="thumbs">
+    <div class="ph ol w r" style="--d:.6s"><img src="assets/vac-use.jpg" alt="The vacuum in use on a wooden floor" style="object-position:50% 30%"><span class="chip">In use</span></div>
+    <div class="ph ol w r" style="--d:.72s"><img src="assets/vac-wall.jpg" alt="The vacuum hanging on its wall mount in a kitchen"><span class="chip">Wall mount</span></div>
+    <div class="ph ol paper w r" style="--d:.84s"><img src="assets/vac-exploded.jpg" alt="Exploded view render of the vacuum"><span class="chip">Exploded view</span></div>
+  </div>
+</section>
+
+<!-- ===================== 11 CHAISE ===================== -->
+<section class="slide s-chaise" data-title="Chaise longue" data-level="Level 3 · Term 2" data-time="35" aria-label="Modular chaise longue">
+  <div class="left">
+    <p class="eyebrow r">Level 3 · Term 2 · Training 2</p>
+    <h2 class="h1 r" style="--d:.08s">Modular chaise longue</h2>
+    <p class="body r" style="--d:.2s">A flat-pack chaise longue cut on the CNC router, designed for easy assembly and transport. We drew it in AutoCAD and SolidWorks and prepared the CNC-ready files ourselves.</p>
+    <ul class="facts">
+      <li class="r" style="--d:.35s"><b>Team</b>Team project</li>
+      <li class="r" style="--d:.42s"><b>Make</b>CNC router, flat-pack</li>
+      <li class="r" style="--d:.49s"><b>Files</b>AutoCAD · SolidWorks</li>
+    </ul>
+  </div>
+  <div class="pair">
+    <figure class="fig r" style="left:0;--d:.3s"><div class="ph ol w" style="--d:.4s"><img src="assets/chaise-render.jpg" alt="Render of the chaise longue in navy upholstery and light wood"></div><figcaption class="cap"><b>Fig 11.1</b>The render</figcaption></figure>
+    <svg viewBox="0 0 60 36" aria-hidden="true"><path class="dr" pathLength="1" d="M4 18H54M42 6L54 18L42 30" style="--d:1s"/></svg>
+    <figure class="fig r" style="left:560px;--d:.6s"><div class="ph ol w" style="--d:.75s"><img src="assets/chaise-real.jpg" alt="The finished chaise longue in a room"></div><figcaption class="cap"><b>Fig 11.2</b>The built piece</figcaption></figure>
+  </div>
+</section>
+
+<!-- ===================== 12 CAMPUS ===================== -->
+<section class="slide s-campus" data-title="On campus" data-level="BUC campus" data-time="35" aria-label="Work that stays on campus">
+  <p class="eyebrow r">Badr University in Cairo · Permanent work</p>
+  <h2 class="h1 r" style="--d:.08s">Work that stays on campus</h2>
+  <div class="half" style="left:128px">
+    <figure class="fig r" style="--d:.25s"><div class="ph ol w" style="--d:.35s"><img src="assets/mural-wide.jpg" alt="The Pharaonic mural on campus with Mohamed and a classmate"></div></figure>
+    <div class="txt">
+      <h3 class="h3 r" style="--d:.4s">The Pharaonic mural</h3>
+      <p class="body r" style="--d:.5s">My design was chosen for the campus mural, and our whole batch painted it together.</p>
+      <div class="swatches r" style="--d:.65s" aria-label="Mural colour palette">
+        <i style="background:#a15241"></i><i style="background:#6f5448"></i><i style="background:#c68660"></i><i style="background:#f9cf97"></i><i style="background:#a5a992"></i><i style="background:#496477"></i><i style="background:#617984"></i>
+      </div>
+      <p class="mono-l sw-l r" style="--d:.7s">Mural palette</p>
+    </div>
+  </div>
+  <div class="half" style="left:976px">
+    <figure class="fig r" style="--d:.45s"><div class="ph ol w" style="--d:.55s"><img src="assets/columns.jpg" alt="Stacked laser-cut Islamic pattern columns displayed in a university hall"></div></figure>
+    <div class="txt">
+      <h3 class="h3 r" style="--d:.6s">Islamic &amp; Pharaonic columns</h3>
+      <p class="body r" style="--d:.7s">A heritage project: laser-cut decorative columns and boxes from my designs, built with my team and on display at BUC.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 13 VORTEX / VERTIX ===================== -->
+<section class="slide s-grill" data-title="VORTEX & VERTIX" data-level="Level 4 · 2026/27" data-time="35" aria-label="VORTEX and VERTIX grill systems">
+  <p class="eyebrow r">Level 4 · Now · Product Design 3</p>
+  <h2 class="h1 r" style="--d:.08s">VORTEX &amp; VERTIX</h2>
+  <p class="lede r" style="--d:.2s">Commercial shawarma and chicken grill systems for restaurants and food trucks.</p>
+  <div class="grill">
+    <figure class="fig big r" style="--d:.3s"><div class="ph ol paper w" style="--d:.4s"><img src="assets/vortex-b.jpg" alt="Render of the VORTEX stainless steel horizontal grill with its tray open"></div><figcaption class="cap"><b>VORTEX</b>Horizontal rotisserie with an integrated smoke hood</figcaption></figure>
+    <figure class="fig post r" style="--d:.5s"><div class="ph ol contain w" style="--d:.6s;background:#e8e4dc"><img src="assets/vortex-poster.jpg" alt="VORTEX presentation board"></div><figcaption class="cap"><b>Board</b>VORTEX</figcaption></figure>
+    <figure class="fig post r" style="--d:.65s"><div class="ph ol contain w" style="--d:.75s;background:#111"><img src="assets/vertix-poster.jpg" alt="VERTIX vertical shawarma grill presentation board"></div><figcaption class="cap"><b>VERTIX</b>Vertical burners, triple cooling fans</figcaption></figure>
+  </div>
+</section>
+
+<!-- ===================== 14 ELECTROLUX ===================== -->
+<section class="slide s-elx" data-title="Electrolux Group" data-level="Summer 2026" data-time="40" aria-label="Electrolux Group internship">
+  <figure class="fig hero r" style="--d:.2s"><div class="ph ol w" style="--d:.3s"><img src="assets/me-electrolux.jpg" alt="Mohamed with his internship certificate and award at Electrolux Group"></div><figcaption class="cap"><b>Fig 14.1</b>Internship certificate</figcaption></figure>
+  <div class="right">
+    <p class="eyebrow r">Outside university · Summer 2026 · Two months</p>
+    <h2 class="h1 r" style="--d:.08s">Electrolux Group internship</h2>
+    <p class="lede r" style="--d:.2s">I designed a part for the Zanussi brand, and we made a prototype of it.</p>
+    <div class="pull r" style="--d:.35s">
+      <blockquote>“The product shouldn't just look good on paper. It should be <em>designed to be made.</em>”</blockquote>
+      <p class="mono-l">From my LinkedIn post about the internship</p>
+    </div>
+    <div class="elx-row">
+      <div class="ph ol w r" style="--d:.5s"><img src="assets/elx-logo.jpg" alt="Internship group with certificates in front of the Electrolux logo"></div>
+      <div class="ph ol w r" style="--d:.6s"><img src="assets/elx-group.jpg" alt="Interns in front of the Electrolux green wall"></div>
+      <div class="ph ol w r" style="--d:.7s"><img src="assets/elx-office.jpg" alt="Working session in the Electrolux office" style="object-position:50% 40%"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 15 NOTE ===================== -->
+<section class="slide s-note" data-title="What I learned" data-level="Note 1" data-time="25" aria-label="What I learned">
+  <div class="note">
+    <p class="eyebrow r">Note 1 · What I learned</p>
+    <p class="big r" style="--d:.15s">The hardest part was wanting to make everything and learn everything, <span class="hl" style="--d:1.1s">all at the same time.</span></p>
+    <p class="after r" style="--d:.9s">Level by level, I learned to focus on one thing and do it fully.</p>
+  </div>
+</section>
+
+<!-- ===================== 16 NEXT ===================== -->
+<section class="slide s-next" data-title="What's next" data-level="Level 5 · 2027/28" data-time="35" aria-label="What I'm building next">
+  <p class="eyebrow r">Level 5 · 2027/28 · Graduation 2028</p>
+  <h2 class="h1 r" style="--d:.08s">What I'm building next</h2>
+  <svg class="future-svg" viewBox="0 0 1664 40" aria-hidden="true">
+    <path class="dr" pathLength="1" d="M0 20H1650" style="stroke:var(--line-soft);--d:.3s"/>
+    <path class="dr" pathLength="1" d="M1636 10L1652 20L1636 30" style="stroke:var(--line);--d:1s"/>
+  </svg>
+  <div class="cards">
+    <div class="card r" style="--d:.4s">
+      <p class="tag">Level 5</p>
+      <h3 class="h3">Final year</h3>
+      <p class="body">One more level in the department, then graduation in 2028.</p>
+    </div>
+    <div class="card hot r" style="--d:.55s">
+      <p class="tag">With my father</p>
+      <h3 class="h3">A home appliances company</h3>
+      <p class="body">A new home appliances company and factory that we are building together.</p>
+    </div>
+    <div class="card r" style="--d:.7s">
+      <p class="tag">In development</p>
+      <h3 class="h3">A SaaS business</h3>
+      <p class="body">Still in progress, so I'm keeping it outside this portfolio for now.</p>
+    </div>
+  </div>
+  <p class="lede close r" style="--d:.9s">After graduation, I'll focus on growing my home appliances company and my SaaS business.</p>
+</section>
+
+<!-- ===================== 17 THANKS ===================== -->
+<section class="slide s-thanks" data-title="Thank you" data-level="End of set" data-time="15" aria-label="Thank you">
+  <div class="left">
+    <p class="eyebrow r">Thank you</p>
+    <h2 class="mega"><span class="ln"><span class="up" style="--d:.2s">Thank you.</span></span></h2>
+    <p class="lede r" style="--d:.6s">Dr. Wesam Oncy, thank you for my nomination and for everything.</p>
+    <p class="body r" style="--d:.75s">And thank you to all the doctors and teaching assistants of the Product Design department.</p>
+    <p class="tagline"><span class="wt" style="--d:1.05s">Designed to be made.</span></p>
+  </div>
+  <div class="qr r" style="--d:.5s">
+    <div class="qr-box">%%QR%%</div>
+    <h3 class="h3">Find me on LinkedIn</h3>
+    <p class="mono-l">linkedin.com/in/mohamed-ismail-2504a7332</p>
+  </div>
+</section>
+
+<div class="tblock" aria-hidden="true">
+  <div class="tb-mono">M<span>I</span></div>
+  <div class="tb-c"><span class="tb-l">Title</span><span class="tb-v" id="tbTitle">Mohamed Ismail</span></div>
+  <div class="tb-c"><span class="tb-l">Stage</span><span class="tb-v" id="tbLevel">Level 4 of 5</span></div>
+  <div class="tb-c end"><span class="tb-l">Sheet</span><span class="tb-v" id="tbSheet">01 / 17</span></div>
+  <div class="tb-c low"><span class="tb-l">Drawn by</span><span class="tb-v sm">M. Ismail</span></div>
+  <div class="tb-c low"><span class="tb-l">Department</span><span class="tb-v sm">Product Design · BUC</span></div>
+  <div class="tb-c low end"><span class="tb-l">Scale</span><span class="tb-v sm">1:1</span></div>
+</div>
+<div class="credits" aria-hidden="true">
+  <div class="ticks" id="ticks"></div>
+  <p>Designed to be made · Mohamed Ismail</p>
+</div>
+</div>
+</div>
+
+<div class="ctrls" id="ctrls">
+  <button type="button" id="cPrev" aria-label="Previous slide"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" id="cNext" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  <button type="button" id="cIndex" aria-label="All slides and shortcuts"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg></button>
+  <button type="button" id="cPresenter" aria-label="Open presenter view"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M8 20h8M12 16v4"/></svg></button>
+  <button type="button" id="cFull" aria-label="Full screen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+</div>
+
+<div class="ov" id="ov" hidden>
+  <div class="ov-panel" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+    <div class="ov-top"><h2 id="ovTitle">Sheet index</h2><button type="button" class="ov-close" id="ovClose">Close · Esc</button></div>
+    <ol class="ov-list" id="ovList"></ol>
+    <div class="keys">
+      <span><kbd>→</kbd>or Space: next</span>
+      <span><kbd>←</kbd>previous</span>
+      <span><kbd>P</kbd>presenter view</span>
+      <span><kbd>F</kbd>full screen</span>
+      <span><kbd>B</kbd>blank the screen</span>
+      <span><kbd>T</kbd>show the timer</span>
+      <span><kbd>O</kbd>this index</span>
+      <span><kbd>Home</kbd>first slide</span>
+    </div>
+  </div>
+</div>
+<div class="black" id="black" hidden></div>
+<div class="hud" id="hud" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+  'use strict';
+  var stage = document.getElementById('stage');
+  var slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
+  var N = slides.length, cur = 0;
+  var reduce = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  function $(id){ return document.getElementById(id); }
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function mmss(sec){ var s = Math.max(0, Math.round(Math.abs(sec))); return pad(Math.floor(s/60)) + ':' + pad(s%60); }
+
+  if (/[?&]noanim\b/.test(location.search)) document.body.classList.add('noanim');
+
+  /* ---- drawing sheet border: zones 1-8 and A-D ---- */
+  (function buildFrame(){
+    var W = 1920, H = 1080, o = 24, i = 48, cols = 8, rows = 4;
+    var cw = (W - 2*i)/cols, rh = (H - 2*i)/rows, s = '';
+    s += '<rect class="fr-o" x="'+o+'" y="'+o+'" width="'+(W-2*o)+'" height="'+(H-2*o)+'"/>';
+    s += '<rect class="fr-i" x="'+i+'" y="'+i+'" width="'+(W-2*i)+'" height="'+(H-2*i)+'"/>';
+    for (var c = 0; c < cols; c++){
+      var x = i + c*cw;
+      if (c > 0) s += '<line class="fr-t" x1="'+x+'" y1="'+o+'" x2="'+x+'" y2="'+i+'"/><line class="fr-t" x1="'+x+'" y1="'+(H-i)+'" x2="'+x+'" y2="'+(H-o)+'"/>';
+      s += '<text x="'+(x+cw/2)+'" y="'+(o+12)+'">'+(c+1)+'</text><text x="'+(x+cw/2)+'" y="'+(H-o-12)+'">'+(c+1)+'</text>';
+    }
+    for (var r = 0; r < rows; r++){
+      var y = i + r*rh, L = 'ABCD'.charAt(r);
+      if (r > 0) s += '<line class="fr-t" x1="'+o+'" y1="'+y+'" x2="'+i+'" y2="'+y+'"/><line class="fr-t" x1="'+(W-i)+'" y1="'+y+'" x2="'+(W-o)+'" y2="'+y+'"/>';
+      s += '<text x="'+(o+12)+'" y="'+(y+rh/2)+'">'+L+'</text><text x="'+(W-o-12)+'" y="'+(y+rh/2)+'">'+L+'</text>';
+    }
+    // centring marks
+    s += '<line class="fr-i" x1="'+(W/2)+'" y1="'+o+'" x2="'+(W/2)+'" y2="'+(i+18)+'"/><line class="fr-i" x1="'+o+'" y1="'+(H/2)+'" x2="'+(i+18)+'" y2="'+(H/2)+'"/><line class="fr-i" x1="'+(W-o)+'" y1="'+(H/2)+'" x2="'+(W-i-18)+'" y2="'+(H/2)+'"/>';
+    stage.insertAdjacentHTML('afterbegin', '<svg class="sheet" viewBox="0 0 1920 1080" aria-hidden="true">'+s+'</svg>');
+  })();
+
+  var ticks = $('ticks');
+  for (var k = 0; k < N; k++) ticks.appendChild(document.createElement('i'));
+
+  /* ---- fit the 1920x1080 sheet to the window ---- */
+  function fit(){
+    var p = innerWidth < 700 ? 16 : 0;
+    var s = Math.min((innerWidth - 2*p)/1920, (innerHeight - 2*p)/1080);
+    stage.style.setProperty('--s', s);
+  }
+  addEventListener('resize', fit); fit();
+
+  /* make the cover's dimension line match the width of the name */
+  function sizeDim(){
+    var ln = slides[0].querySelectorAll('.mega .ln > span'), w = 0;
+    for (var j = 0; j < ln.length; j++){
+      var range = document.createRange(); range.selectNodeContents(ln[j]);
+      w = Math.max(w, range.getBoundingClientRect().width / (parseFloat(stage.style.getPropertyValue('--s')) || 1));
+    }
+    if (w > 200) $('coverDim').style.setProperty('--dimw', Math.round(w) + 'px');
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeDim); else setTimeout(sizeDim, 300);
+
+  /* ---- counters ---- */
+  function runCounters(s){
+    var els = s.querySelectorAll('[data-count]');
+    Array.prototype.forEach.call(els, function(el){
+      var to = +el.getAttribute('data-count'), from = +el.getAttribute('data-from'), dec = +(el.getAttribute('data-dec') || 0), delay = +(el.getAttribute('data-delay') || 0);
+      if (reduce || document.body.classList.contains('noanim')){ el.textContent = to.toFixed(dec); return; }
+      el.textContent = from.toFixed(dec);
+      setTimeout(function(){
+        var t0 = performance.now();
+        (function step(now){
+          var t = Math.min(1, (now - t0)/1300), e = 1 - Math.pow(1 - t, 3);
+          el.textContent = (from + (to - from)*e).toFixed(dec);
+          if (t < 1 && s.classList.contains('is-active')) requestAnimationFrame(step); else el.textContent = to.toFixed(dec);
+        })(t0);
+      }, delay);
+    });
+  }
+
+  /* ---- navigation ---- */
+  function chrome(){
+    var s = slides[cur];
+    var tv = [[$('tbTitle'), s.getAttribute('data-title')], [$('tbLevel'), s.getAttribute('data-level')], [$('tbSheet'), pad(cur+1) + ' / ' + pad(N)]];
+    tv.forEach(function(p){ p[0].textContent = p[1]; p[0].classList.remove('flip'); void p[0].offsetWidth; p[0].classList.add('flip'); });
+    Array.prototype.forEach.call(ticks.children, function(t, j){ t.className = j < cur ? 'on' : (j === cur ? 'cur' : ''); });
+  }
+  function setHash(){ try { history.replaceState(null, '', '#slide-' + (cur+1)); } catch(e){} }
+  function go(i, user){
+    i = Math.max(0, Math.min(N-1, i));
+    if (i === cur) return;
+    slides[cur].classList.remove('is-active');
+    cur = i;
+    var s = slides[cur];
+    void s.offsetWidth;
+    s.classList.add('is-active');
+    runCounters(s);
+    chrome(); setHash(); sync();
+    if (user && !T.running && T.acc === 0) T.start();
+  }
+  function next(){ go(cur + 1, true); }
+  function prev(){ go(cur - 1, true); }
+
+  /* ---- timer ---- */
+  var PLAN = slides.map(function(s){ return +(s.getAttribute('data-time') || 35); });
+  var TOTAL = 600;
+  var T = { running:false, t0:0, acc:0,
+    start:function(){ if (this.running) return; this.running = true; this.t0 = Date.now(); },
+    pause:function(){ if (!this.running) return; this.acc += Date.now() - this.t0; this.running = false; },
+    reset:function(){ this.running = false; this.acc = 0; },
+    sec:function(){ return (this.acc + (this.running ? Date.now() - this.t0 : 0))/1000; } };
+  function planStart(i){ var a = 0; for (var j = 0; j < i; j++) a += PLAN[j]; return a; }
+  function pace(){
+    var el = T.sec(); if (!T.running && T.acc === 0) return { txt:'Timer starts on your first slide change', cls:'' };
+    var a = planStart(cur), b = a + PLAN[cur];
+    if (el > b + 10) return { txt:'Behind plan by ' + mmss(el - b), cls:'late' };
+    if (el < a - 10) return { txt:'Ahead of plan by ' + mmss(a - el), cls:'early' };
+    return { txt:'On pace', cls:'ok' };
+  }
+  var hud = $('hud');
+  setInterval(function(){
+    if (!hud.hidden) hud.innerHTML = mmss(T.sec()) + ' <b>/ ' + mmss(TOTAL) + '</b> · ' + pad(cur+1) + '/' + pad(N);
+    if (pw && !pw.closed) pvTick();
+  }, 250);
+
+  /* ---- presenter view (second window) ---- */
+  var pw = null, pv = {};
+  var PV_CSS = '\
+body.pv{margin:0;height:100vh;overflow:hidden;display:grid;grid-template-rows:auto 1fr;background:#071a33;color:#eaf2fd;font-family:var(--f-body)}\
+.pv-top{display:flex;align-items:center;gap:28px;padding:16px 22px;border-bottom:1px solid rgba(206,226,250,.24)}\
+.pv-clk{display:flex;flex-direction:column;gap:4px}\
+.pv-clk b{font:700 46px/1 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:.02em}\
+.pv-clk small,.pv-lbl{font:500 12px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:#a8c1e0}\
+.pv-pace{padding:10px 14px;border:1px solid rgba(206,226,250,.3);font:600 15px/1 var(--f-mono);letter-spacing:.06em}\
+.pv-pace.late{border-color:#ff8a3d;color:#ff8a3d}.pv-pace.ok{border-color:#7fd1a1;color:#9be0b6}.pv-pace.early{border-color:#a8c1e0}\
+.pv-pos{margin-left:auto;text-align:right}.pv-pos b{display:block;font:700 30px/1 var(--f-display);text-transform:uppercase}.pv-pos span{font:500 14px var(--f-mono);color:#a8c1e0}\
+.pv-main{display:grid;grid-template-columns:1.7fr 1fr;gap:20px;padding:20px 22px;min-height:0}\
+.pv-box{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#123a6b;outline:1px solid rgba(206,226,250,.3)}\
+.pv-box .stage{left:0;top:0;transform:scale(var(--ps,.3));transform-origin:0 0;box-shadow:none}\
+.pv-side{display:flex;flex-direction:column;gap:12px;min-width:0}\
+.pv-side p{margin:0}.pv-nt{font:600 22px/1.2 var(--f-display);text-transform:uppercase}\
+.pv-plan{font:500 15px/1.5 var(--f-mono);color:#a8c1e0}\
+.pv-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}\
+.pv-btns button{padding:14px;font:600 14px var(--f-mono);color:#eaf2fd;background:#0c2b52;border:1px solid rgba(206,226,250,.35);border-radius:8px;cursor:pointer}\
+.pv-btns button:hover{border-color:#ff8a3d}\
+.pv-end{position:absolute;inset:0;display:grid;place-items:center;font:600 22px var(--f-mono);color:#a8c1e0;background:#0c2b52}\
+.pv-keys{font:500 12px/1.6 var(--f-mono);color:#a8c1e0}';
+  var PV_HTML = '\
+<div class="pv-top">\
+  <div class="pv-clk"><b id="pvEl">00:00</b><small>Elapsed</small></div>\
+  <div class="pv-clk"><b id="pvRem">10:00</b><small>Remaining of 10:00</small></div>\
+  <div class="pv-pace" id="pvPace"></div>\
+  <div class="pv-pos"><b id="pvTitle"></b><span id="pvNum"></span></div>\
+</div>\
+<div class="pv-main">\
+  <div><p class="pv-lbl" style="margin-bottom:10px">On screen now</p><div class="pv-box" id="pvCur"></div></div>\
+  <div class="pv-side">\
+    <p class="pv-lbl">Up next</p><div class="pv-box" id="pvNext"></div>\
+    <p class="pv-nt" id="pvNextTitle"></p>\
+    <p class="pv-plan" id="pvPlan"></p>\
+    <div class="pv-btns"><button id="pvBack">&#9664; Back</button><button id="pvFwd">Next &#9654;</button><button id="pvRun">Pause timer</button><button id="pvReset">Reset timer</button></div>\
+    <p class="pv-keys">Arrow keys and Space work in this window too. B blanks the audience screen.</p>\
+  </div>\
+</div>';
+
+  function openPresenter(){
+    if (pw && !pw.closed){ pw.focus(); return; }
+    try { pw = window.open('', 'mi-presenter', 'width=1280,height=800'); } catch(e){ pw = null; }
+    if (!pw){ toast('Presenter view needs a second window. Open the downloaded HTML file in Chrome or Edge, allow pop-ups, then press P again.'); return; }
+    var d;
+    try { d = pw.document; d.open(); d.write('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Presenter view</title></head><body class="pv"></body></html>'); d.close(); }
+    catch(e){ toast('The presenter window could not be set up. Try the downloaded HTML file in Chrome or Edge.'); return; }
+    var st = d.createElement('style'); st.textContent = $('deck-css').textContent + PV_CSS; d.head.appendChild(st);
+    d.body.innerHTML = PV_HTML;
+    pv = { d:d, cur:d.getElementById('pvCur'), nxt:d.getElementById('pvNext') };
+    d.getElementById('pvBack').onclick = prev;
+    d.getElementById('pvFwd').onclick = next;
+    d.getElementById('pvRun').onclick = function(){ if (T.running) T.pause(); else T.start(); pvTick(); };
+    d.getElementById('pvReset').onclick = function(){ T.reset(); pvTick(); };
+    d.addEventListener('keydown', onKey);
+    pw.addEventListener('resize', pvFit);
+    sync(); pvFit(); pvTick();
+  }
+  function preview(box, i){
+    box.innerHTML = '';
+    if (i >= N){ var e = pv.d.createElement('div'); e.className = 'pv-end'; e.textContent = 'End of presentation'; box.appendChild(e); return; }
+    var st = pv.d.createElement('div'); st.className = 'stage static';
+    var clone = pv.d.importNode(slides[i], true); clone.classList.add('is-active');
+    st.appendChild(clone); box.appendChild(st);
+  }
+  function pvFit(){
+    if (!pw || pw.closed) return;
+    [pv.cur, pv.nxt].forEach(function(b){ var st = b.querySelector('.stage'); if (st) st.style.setProperty('--ps', b.clientWidth/1920); });
+  }
+  function sync(){
+    if (!pw || pw.closed || !pv.d) return;
+    preview(pv.cur, cur); preview(pv.nxt, cur + 1); pvFit();
+    pv.d.getElementById('pvTitle').textContent = slides[cur].getAttribute('data-title');
+    pv.d.getElementById('pvNum').textContent = 'Slide ' + pad(cur+1) + ' of ' + pad(N);
+    pv.d.getElementById('pvNextTitle').textContent = cur + 1 < N ? slides[cur+1].getAttribute('data-title') : '';
+    pv.d.getElementById('pvPlan').textContent = 'About ' + PLAN[cur] + ' seconds on this slide. Plan to leave it by ' + mmss(planStart(cur) + PLAN[cur]) + '.';
+    pvTick();
+  }
+  function pvTick(){
+    if (!pv.d) return;
+    var el = T.sec(), p = pace();
+    pv.d.getElementById('pvEl').textContent = mmss(el);
+    var rem = TOTAL - el; pv.d.getElementById('pvRem').textContent = (rem < 0 ? '+' : '') + mmss(rem);
+    var pc = pv.d.getElementById('pvPace'); pc.textContent = p.txt; pc.className = 'pv-pace ' + p.cls;
+    pv.d.getElementById('pvRun').textContent = T.running ? 'Pause timer' : (T.acc ? 'Resume timer' : 'Start timer');
+  }
+
+  /* ---- overlays ---- */
+  var ov = $('ov'), black = $('black'), toastEl = $('toast'), toastT = 0;
+  function toast(msg){ toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.hidden = true; }, 5200); }
+  function openIndex(){
+    var list = $('ovList'); list.innerHTML = '';
+    slides.forEach(function(s, j){
+      var li = document.createElement('li'), b = document.createElement('button');
+      b.type = 'button'; b.className = j === cur ? 'cur' : '';
+      b.innerHTML = '<span>' + pad(j+1) + '</span>';
+      b.appendChild(document.createTextNode(s.getAttribute('data-title')));
+      b.onclick = function(){ closeIndex(); go(j, true); };
+      li.appendChild(b); list.appendChild(li);
+    });
+    ov.hidden = false; $('ovClose').focus();
+  }
+  function closeIndex(){ ov.hidden = true; }
+  $('ovClose').onclick = closeIndex;
+  ov.addEventListener('click', function(e){ if (e.target === ov) closeIndex(); });
+  black.addEventListener('click', function(){ black.hidden = true; });
+  function fullscreen(){
+    var d = document, el = d.documentElement;
+    try {
+      if (d.fullscreenElement || d.webkitFullscreenElement){ (d.exitFullscreen || d.webkitExitFullscreen).call(d); }
+      else if (el.requestFullscreen){ var p = el.requestFullscreen(); if (p && p.catch) p.catch(function(){ toast('Full screen is not available here. Use your browser\'s full-screen key (F11).'); }); }
+      else if (el.webkitRequestFullscreen){ el.webkitRequestFullscreen(); }
+      else toast('Full screen is not available here. Use your browser\'s full-screen key (F11).');
+    } catch(e){ toast('Full screen is not available here. Use your browser\'s full-screen key (F11).'); }
+  }
+
+  /* ---- input ---- */
+  function onKey(e){
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var k = e.key;
+    if (!ov.hidden){ if (k === 'Escape' || k === 'o' || k === 'O' || k === 'g' || k === 'G') { closeIndex(); e.preventDefault(); } return; }
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || k === ' ' || k === 'Enter' || k === 'n' || k === 'N'){ if (!black.hidden) black.hidden = true; else next(); e.preventDefault(); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp' || k === 'Backspace'){ prev(); e.preventDefault(); }
+    else if (k === 'Home'){ go(0, true); e.preventDefault(); }
+    else if (k === 'End'){ go(N-1, true); e.preventDefault(); }
+    else if (k === 'f' || k === 'F'){ fullscreen(); }
+    else if (k === 'p' || k === 'P'){ openPresenter(); }
+    else if (k === 'o' || k === 'O' || k === 'g' || k === 'G'){ openIndex(); }
+    else if (k === 'b' || k === 'B' || k === '.' || k === 'w' || k === 'W'){ black.hidden = !black.hidden; }
+    else if (k === 't' || k === 'T'){ hud.hidden = !hud.hidden; }
+    else if (k === 'Escape'){ black.hidden = true; }
+  }
+  document.addEventListener('keydown', onKey);
+
+  $('cPrev').onclick = prev; $('cNext').onclick = next; $('cIndex').onclick = openIndex;
+  $('cPresenter').onclick = openPresenter; $('cFull').onclick = fullscreen;
+  $('viewport').addEventListener('click', function(e){
+    if (e.target.closest && e.target.closest('a,button')) return;
+    var sel = window.getSelection && String(window.getSelection()); if (sel) return;
+    if (e.clientX < innerWidth * 0.25) prev(); else next();
+  });
+  var tx = null, ty = null;
+  $('viewport').addEventListener('touchstart', function(e){ var t = e.changedTouches[0]; tx = t.clientX; ty = t.clientY; }, { passive:true });
+  $('viewport').addEventListener('touchend', function(e){
+    if (tx === null) return; var t = e.changedTouches[0], dx = t.clientX - tx, dy = t.clientY - ty; tx = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)){ if (dx < 0) next(); else prev(); e.preventDefault(); }
+  });
+
+  var ctrls = $('ctrls'), hideT = 0;
+  function showCtrls(){ ctrls.classList.add('show'); clearTimeout(hideT); hideT = setTimeout(function(){ if (!ctrls.contains(document.activeElement)) ctrls.classList.remove('show'); }, 2600); }
+  document.addEventListener('mousemove', showCtrls);
+  ctrls.addEventListener('focusin', showCtrls);
+  showCtrls();
+
+  /* ---- start ---- */
+  function fromHash(){ var m = /^#slide-(\d+)$/.exec(location.hash || ''); return m ? Math.max(0, Math.min(N-1, +m[1] - 1)) : 0; }
+  addEventListener('hashchange', function(){ go(fromHash()); });
+  chrome();
+  var h = fromHash();
+  if (h) go(h); else runCounters(slides[0]);
+})();
+</script>
