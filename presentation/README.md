@@ -2,8 +2,11 @@
 
 A 10-minute animated presentation: 17 slides styled as an engineering drawing sheet.
 
-**To present:** open `dist/Mohamed-Ismail-Presentation.html` in Chrome or Edge. It is a single file with
-every image and font built in, so it works offline from a USB stick.
+**To present:** open one of the two versions in Chrome or Edge. Each is a single file with every image
+and font built in, so it works offline from a USB stick. The slides and wording are the same in both:
+
+- `dist/Mohamed-Ismail-Presentation-Blueprint.html`: dark blueprint drawing sheet
+- `dist/Mohamed-Ismail-Presentation-Light.html`: light dot-grid wall, black type, framed prints
 
 | Key | Action |
 | --- | --- |
@@ -20,4 +23,4 @@ to your laptop screen, then click the main window and press **F** on the project
 If the browser blocks the pop-up, allow pop-ups for the file and press **P** again.
 
 **To edit:** change `src/deck.html` (text and layout) or swap images in `src/assets/`, then run
-`python3 build.py` to rebuild the file in `dist/`.
+`python3 build.py` to rebuild both files in `dist/`. The light theme's styles live in `src/theme-light.css`.

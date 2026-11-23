@@ -1,0 +1,74 @@
+/* ===== Theme: Light =====
+   Same sheet, a different studio: light grey wall with dot-grid paper, black ink,
+   one safety-orange accent, and photos hung as framed prints with a white mat. */
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:block;src:url(fonts/Archivo-var.woff2) format('woff2')}
+@font-face{font-family:'Public Sans';font-style:normal;font-weight:100 900;font-display:block;src:url(fonts/PublicSans-var.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:block;src:url(fonts/IBMPlexMono-400.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:block;src:url(fonts/IBMPlexMono-500.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:block;src:url(fonts/IBMPlexMono-600.woff2) format('woff2')}
+
+:root{
+  --bp:#e8e8e3;          /* gallery wall */
+  --bp-deep:#d8d8d1;     /* placeholder behind photos */
+  --bp-edge:#cdcdc6;     /* letterbox */
+  --ink:#171717;
+  --ink-2:#55554f;
+  --line:rgba(23,23,23,.72);
+  --line-soft:rgba(23,23,23,.16);
+  --grid-minor:transparent;
+  --grid-major:transparent;
+  --red:#b5410f;         /* safety orange, dark enough for small text */
+  --red-hi:#ff6a2b;      /* brighter orange for the dark note slide */
+  --paper:#ffffff;
+  --f-display:'Archivo','Arial Narrow',sans-serif;
+  --f-body:'Public Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+/* Archivo is a width-variable face: run it condensed everywhere it appears.
+   !important on every element because the font shorthand resets font-variation-settings. */
+*{font-variation-settings:"wdth" 64 !important}
+
+.stage{background-color:var(--bp);
+  background-image:radial-gradient(ellipse 80% 70% at 25% 12%,rgba(255,255,255,.6),transparent 70%),
+                   radial-gradient(circle,rgba(23,23,23,.17) 1.1px,transparent 1.7px);
+  background-size:100% 100%,24px 24px;background-position:0 0,12px 12px;
+  box-shadow:0 30px 90px rgba(0,0,0,.22)}
+.grain,.sheet{display:none}
+
+/* title block becomes a gallery wall label */
+.tblock{background:#fff;border:0;box-shadow:0 12px 30px rgba(20,20,15,.08)}
+.tb-mono{background:var(--ink);color:#fff;border-right:0}
+.tb-mono span{color:var(--red-hi)}
+.tb-c{border-color:rgba(23,23,23,.1)}
+
+/* photos hang as framed prints */
+.ph.ol{outline:0;box-shadow:0 0 0 7px #fff,0 20px 40px rgba(20,20,15,.16)}
+.panel{outline:0;box-shadow:0 20px 44px rgba(20,20,15,.12)}
+.qr-box{outline:0;box-shadow:0 20px 44px rgba(20,20,15,.12)}
+.rev-card .ph{box-shadow:0 14px 30px rgba(20,20,15,.12)}
+.rev-row{background:#fff;border-color:transparent}
+.rev-row b{border-right-color:rgba(23,23,23,.1)}
+.sk{box-shadow:0 14px 26px rgba(20,20,15,.2)}
+.chip{background:#fff;color:var(--ink)}
+.legend{color:var(--ink)}
+.legend p,.legend li span{color:var(--red)}
+.legend li{border-bottom-color:var(--line-soft)}
+.tl-dot.done{background:var(--ink);border-color:var(--ink)}
+.detail-img{box-shadow:0 20px 40px rgba(20,20,15,.18)}
+
+.card{background:#fff;border-color:transparent;box-shadow:0 14px 34px rgba(20,20,15,.08)}
+.card.hot{border-color:var(--red)}
+
+/* the one dark slide: the lesson */
+.s-note{background:#161616}
+.s-note .eyebrow{color:var(--red-hi)}
+.note .big{color:#f2f2ee}
+.note .after{color:#b4b4ac}
+.note .hl{background-image:linear-gradient(transparent 82%,var(--red-hi) 82%,var(--red-hi) 94%,transparent 94%)}
+
+/* on-screen controls and overlays */
+.ctrls button,.ov button,.ov-close{background:rgba(255,255,255,.95);color:var(--ink);border-color:rgba(23,23,23,.22)}
+.ov{background:rgba(30,30,28,.55)}
+.ov-panel{background:#fff;border-color:var(--ink)}
+.hud,.toast{background:#fff;color:var(--ink)}
